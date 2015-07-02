@@ -1,19 +1,3 @@
-/** Copyright (C) 2012 
- * Arindam Nath (strider2023@gmail.com)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.touchmenotapps.widget.radialmenu.semicircularmenu;
 
 import java.util.HashMap;
@@ -33,11 +17,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * This is the core class that handles the widget display and user interaction.
- * TODO At times the arc area bound check fails. Gotta check that.
- * @author Arindam Nath (strider2023@gmail.com)
- */
 public class SemiCircularRadialMenu extends View {
 
 	//Static Access Variables
@@ -46,8 +25,8 @@ public class SemiCircularRadialMenu extends View {
 	public static final int HORIZONTAL_TOP = 2;
 	public static final int HORIZONTAL_BOTTOM = 3;
 	//Private non-shared variables
-	private boolean isMenuVisible = false;	
-	private boolean isMenuTogglePressed = false;	
+	private boolean isMenuVisible = true;	
+	private boolean isMenuTogglePressed = true;	
 	private boolean isMenuItemPressed = false;	
 	private String mPressedMenuItemID = null;	
 	private int mDiameter = 0;	
@@ -59,11 +38,11 @@ public class SemiCircularRadialMenu extends View {
 	private Point mViewAnchorPoints;	
 	private HashMap<String, SemiCircularRadialMenuItem> mMenuItems = new HashMap<String, SemiCircularRadialMenuItem>();
 	//Variables that can be user defined	
-	private float mShadowRadius = 5 * getResources().getDisplayMetrics().density;	
+	private float mShadowRadius = 2 * getResources().getDisplayMetrics().density;	
 	private boolean isShowMenuText = false;	
 	private int mOrientation = HORIZONTAL_BOTTOM;	
-	private int centerRadialColor = Color.WHITE;	
-	private int mShadowColor = Color.GRAY;	
+	private int centerRadialColor = Color.parseColor("#ADDAE6");	
+	private int mShadowColor = Color.parseColor("#ADDAE6");	
 	private String openMenuText = "Open";	
 	private String closeMenuText = "Close";	
 	private String centerMenuText = openMenuText;	//Not to be set using setter method
@@ -98,12 +77,12 @@ public class SemiCircularRadialMenu extends View {
 		mRadialMenuPaint.setShadowLayer(mShadowRadius, 0.0f, 0.0f, mShadowColor);  
 		//Draw the menu if the menu is to be displayed.
 		if(isMenuVisible) {
-			canvas.drawArc(mMenuRect, mStartAngle, 180, true, mRadialMenuPaint);
+			canvas.drawArc(mMenuRect, mStartAngle, 270, true, mRadialMenuPaint);
 			//See if there is any item in the collection
 			if(mMenuItems.size() > 0) {
 				float mStart = mStartAngle;
 				//Get the sweep angles based on the number of menu items
-				float mSweep = 180/mMenuItems.size();
+				float mSweep = 270/mMenuItems.size();
 				for(SemiCircularRadialMenuItem item : mMenuItems.values()) {
 					mRadialMenuPaint.setColor(item.getBackgroundColor());
 					item.setMenuPath(mMenuCenterButtonRect, mMenuRect, mStart, mSweep, mRadius, mViewAnchorPoints);
